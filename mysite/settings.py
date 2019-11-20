@@ -25,7 +25,7 @@ SECRET_KEY = 'h_*#jth8ta1&(tm7nimc!=l-k)@47gkti(*2()x*m-x!qqe31y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -78,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mydb',
-        'USER': 'zpc',
+        'USER': 'postgres',
         'PASSWORD': 'stray11@',
         'HOST': '127.0.0.1',
         'PORT': '5432',
@@ -123,3 +123,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
