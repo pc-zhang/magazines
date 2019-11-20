@@ -1,67 +1,26 @@
-{% load static %}
-
 <!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <title>mail</title>
   </head>
   <body>
-    <h3>您的訂閱期刊請見附件</h3>
 
-    <h3>今日更新 2019-11-18</h3>
+    <h2>今日更新 2019-11-18 <a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/subscribe/?email=xxx@gmail.com&key=kdljfsdl">更改訂閱</a></h2>
 
-    <form action="{% url 'polls:subscribe' %}" method="post">
-      <input type="hidden" name="email" value="xxx@gmail.com">
-      <input type="hidden" name="key" value="ajskldfjdlskj">
-    <button type="submit" class="btn btn-primary">更改訂閱</button>
-    </form>
+    <img class="img-thumbnail mb-3" src="images/IMG_4840.JPG" alt="Album screenshot" width="480" height="300">
+    <img class="img-thumbnail mb-3" src="images/IMG_4840.JPG" alt="Album screenshot" width="480" height="300">
+    <img class="img-thumbnail mb-3" src="images/IMG_4840.JPG" alt="Album screenshot" width="480" height="300">
+    <img class="img-thumbnail mb-3" src="images/IMG_4840.JPG" alt="Album screenshot" width="480" height="300">
+    <img class="img-thumbnail mb-3" src="images/IMG_4840.JPG" alt="Album screenshot" width="480" height="300">
+    <img class="img-thumbnail mb-3" src="images/IMG_4840.JPG" alt="Album screenshot" width="480" height="300">
 
-    <div class="row">
-      <div class="col-sm-6 col-md-4 col-xl-3 mb-3">
-        <img class="img-thumbnail mb-3" src="{% static 'images/IMG_4829.JPG' %}" alt="Album screenshot" width="480" height="300">
-          <h5 class="mb-1">The Economist</h5>
-      </div>
-
-      <div class="col-sm-6 col-md-4 col-xl-3 mb-3">
-        <img class="img-thumbnail mb-3" src="{% static 'images/IMG_4830.JPG' %}" alt="Album screenshot" width="480" height="300">
-          <h5 class="mb-1">Time</h5>
-      </div>
-
-      <div class="col-sm-6 col-md-4 col-xl-3 mb-3">
-        <img class="img-thumbnail mb-3" src="{% static 'images/IMG_4837.JPG' %}" alt="Album screenshot" width="480" height="300">
-          <h5 class="mb-1">Elle</h5>
-      </div>
-
-      <div class="col-sm-6 col-md-4 col-xl-3 mb-3">
-        <img class="img-thumbnail mb-3" src="{% static 'images/IMG_4838.JPG' %}" alt="Album screenshot" width="480" height="300">
-          <h5 class="mb-1">Bazaar</h5>
-      </div>
-
-      <div class="col-sm-6 col-md-4 col-xl-3 mb-3">
-        <img class="img-thumbnail mb-3" src="{% static 'images/IMG_4839.JPG' %}" alt="Album screenshot" width="480" height="300">
-          <h5 class="mb-1">Vanity Fair</h5>
-      </div>
-
-      <div class="col-sm-6 col-md-4 col-xl-3 mb-3">
-        <img class="img-thumbnail mb-3" src="{% static 'images/IMG_4840.JPG' %}" alt="Album screenshot" width="480" height="300">
-          <h5 class="mb-1">Traveller</h5>
-      </div>
-
-    </div>
-
-    <h3>您的會員權利(每<a href="{% url 'polls:invite' %}">邀請一名好友</a>加入會員，可多解鎖一種期刊，上限5種)</h3>
+    <h2>您的會員權利</h2>
 
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">郵箱</th>
           <th scope="col">可選期刊數</th>
           <th scope="col">已邀請好友</th>
           <th scope="col">訂閱結束時間</th>
@@ -69,7 +28,6 @@
       </thead>
       <tbody>
         <tr>
-          <td>xxxxxx@gmail.com</td>
           <td>3</td>
           <td>1</td>
           <td>2019-12-12</td>
@@ -77,20 +35,20 @@
       </tbody>
     </table>
 
-    <h3>續訂</h3>
+    <p>(每<a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/invite">邀請一名好友</a>加入會員，可多解鎖一種期刊，上限5種)</p>
 
-    <button type="button" class="btn btn-primary">1個月</button>
-    <button type="button" class="btn btn-primary">3個月</button>
-    <button type="button" class="btn btn-primary">半年</button>
-    <button type="button" class="btn btn-primary">1年</button>
+    <h2>續訂</h2>
 
-    <h3>wsj.pdf</h3>
-    <h3>ft.pdf</h3>
+    <table class="table">
+      <tbody>
+        <tr>
+          <td><a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/pay">1個月</a></td>
+          <td><a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/pay">3個月</a></td>
+          <td><a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/pay">半年</a></td>
+          <td><a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/pay">1年</a></td>
+        </tr>
+      </tbody>
+    </table>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>

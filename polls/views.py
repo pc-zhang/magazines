@@ -10,14 +10,15 @@ def invite(request):
 
 
 def subscribe(request):
-    username = request.POST['email']
-    password = request.POST['key']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return render(request, 'subscribe.html', {})
-    else:
-        return render(request, 'subscribe.html', {})
+    username = request.GET['email']
+    password = request.GET['key']
+    return render(request, 'subscribe.html', {})
+    # user = authenticate(request, username=username, password=password)
+    # if user is not None:
+    #     login(request, user)
+    #     return render(request, 'subscribe.html', {})
+    # else:
+    #     return render(request, 'subscribe.html', {})
 
 
 def subscribe_ok(request):
