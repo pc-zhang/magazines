@@ -11,7 +11,8 @@
 
     <h5>您的郵箱：xxxxxx@gmail.com</h5>
 
-    <form action="{% url 'polls:subscribe' %}" method="post">
+    <form action="{% url 'polls:update_subscribe' user.uuid user.key %}" method="post">
+      {% csrf_token %}
       <input type="submit" value="更改訂閱">
     </form>
 

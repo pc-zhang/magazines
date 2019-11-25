@@ -24,7 +24,7 @@
   </head>
   <body>
 
-  <h3>您已成功更改訂閱! <a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/invite">邀請好友</a>，解鎖更多期刊</h3>
+  <h3>您已成功更改訂閱! <a href="{% url 'polls:invite_page' user.uuid %}">邀請好友</a>，解鎖更多期刊</h3>
 
     <table class="table">
       <thead>
@@ -47,10 +47,16 @@
 
     <h3>續訂</h3>
 
-    <button type="button" class="btn btn-primary">1個月</button>
-    <button type="button" class="btn btn-primary">3個月</button>
-    <button type="button" class="btn btn-primary">半年</button>
-    <button type="button" class="btn btn-primary">1年</button>
+    <table class="table">
+      <tbody>
+        <tr>
+          <td><a href="{% url 'polls:pay' user.uuid 1 %}">1個月</a></td>
+          <td><a href="{% url 'polls:pay' user.uuid 3 %}">3個月</a></td>
+          <td><a href="{% url 'polls:pay' user.uuid 6 %}">半年</a></td>
+          <td><a href="{% url 'polls:pay' user.uuid 12 %}">1年</a></td>
+        </tr>
+      </tbody>
+    </table>
 
     <h3>您的訂閱!</h3>
 
