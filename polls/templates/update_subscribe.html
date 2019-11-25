@@ -5,18 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>免費訂閱體驗</title>
+    <title>更改訂閱</title>
   </head>
   <body>
-    <h3>您的好友xxx@gmail.com贈與您一次免費訂閱體驗</h3>
-    <p>您的郵箱：</p>
-    <form action="{% url 'polls:new_subscribe' user.uuid %}" method="post">
-      {% csrf_token %}
-      <input id="POST-name" type="text" name="email">
-      <input type="submit" value="發送期刊">
+
+    <h5>您的郵箱：xxxxxx@gmail.com</h5>
+
+    <form action="{% url 'polls:subscribe' %}" method="post">
+      <input type="submit" value="更改訂閱">
     </form>
 
-    <p>最多選擇3種期刊</p>
+    <h5>最多選擇3種期刊(<a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/invite">邀請好友</a>，解鎖更多期刊)</h5>
 
     <h3>今日最新</h3>
 

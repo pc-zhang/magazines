@@ -18,8 +18,8 @@ class Command(BaseCommand):
         content = template.render(context)
 
         msg = EmailMessage()
-        msg["Subject"] = '您的訂閱期刊請見附件'
-        msg["From"] = Address("Magazines", "magazines", "helloworld555.site")
+        msg["Subject"] = '您的WSJ更新了'
+        msg["From"] = Address("外刊訂閱", "magazines", "helloworld555.site")
         msg.set_content('')
         msg.add_alternative(content, subtype='html')
         msg["To"] = '13520697042@163.com'

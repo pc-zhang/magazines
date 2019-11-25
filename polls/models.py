@@ -1,12 +1,19 @@
 from django.db import models
 
 
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+class User(models.Model):
+    email = models.EmailField()
+    uuid = models.CharField(max_length=100)
+    key = models.CharField(max_length=100)
+    invitor = models.CharField(max_length=100)
+    invited_count = models.IntegerField(default=0)
+    expire_date = models.DateTimeField('expire date')
 
 
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+class Magazine(models.Model):
+    title = models.CharField(max_length=100)
+
+
+class Subscribe(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    magazine = models.ForeignKey(Magazine, on_delete=models.CASCADE)
