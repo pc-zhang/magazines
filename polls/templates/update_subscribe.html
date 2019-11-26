@@ -17,6 +17,8 @@
       {% csrf_token %}
       <input type="submit" value="更改訂閱">
 
+      <h2>{{error_info}}</h2>
+
       <h5>最多選擇3種期刊(<a href="{% url 'polls:invite_page' user.uuid %}">邀請好友</a>，解鎖更多期刊)</h5>
 
       <h3>今日最新</h3>

@@ -14,22 +14,28 @@ def invite_page(request, invitor_id):
 
 
 def new_subscribe(request, invitor_id):
+    invitor = get_object_or_404(User, uuid=invitor_id)
     magazines = Magazine.objects.all()
     checked_magazines = [magazine for magazine in magazines if request.POST.get(magazine.title, 'off') == 'on']
-
-    if len(checked_magazines) > 3:
-        raise Http404("最多選擇3種")
-    elif len(checked_magazines) < 1:
-        raise Http404("至少選擇一種")
 
     email = request.POST.get('email', 'wrong')
     try:
         validate_email(email)
     except ValidationError as e:
-        raise Http404("郵件格式錯誤")
+        error_info = "郵件格式錯誤"
+        return render(request, 'invite.html', {'user': invitor, 'magazines': magazines, 'error_info': error_info})
 
     if len(User.objects.filter(email=email)) > 0:
-        raise Http404("您已註冊")
+        error_info = "您已註冊"
+        return render(request, 'invite.html', {'user': invitor, 'magazines': magazines, 'error_info': error_info})
+
+
+    if len(checked_magazines) > 3:
+        error_info = "最多選擇3種"
+        return render(request, 'invite.html', {'user': invitor, 'magazines': magazines, 'error_info': error_info})
+    elif len(checked_magazines) < 1:
+        error_info = "至少選擇一種"
+        return render(request, 'invite.html', {'user': invitor, 'magazines': magazines, 'error_info': error_info})
 
     user = User(email=email, uuid=uuid.uuid4().hex, key=uuid.uuid4().hex, invitor=invitor_id,
                 expire_date=timezone.now())
@@ -57,11 +63,13 @@ def update_subscribe(request, user_id, key):
     checked_magazines = [magazine for magazine in magazines if request.POST.get(magazine.title, 'off') == 'on']
 
     if len(checked_magazines) > 3:
-        raise Http404("最多選擇3種")
+        error_info = "最多選擇3種"
+        return render(request, 'update_subscribe.html', {'user': user, 'magazines': magazines, 'error_info':error_info})
     elif len(checked_magazines) < 1:
-        raise Http404("至少選擇一種")
+        error_info = "至少選擇一種"
+        return render(request, 'update_subscribe.html', {'user': user, 'magazines': magazines, 'error_info':error_info})
 
-    for subscribe in Subscribe.objects.get(user=user):
+    for subscribe in Subscribe.objects.filter(user=user):
         subscribe.delete()
 
     for magazine in checked_magazines:
