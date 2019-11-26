@@ -1,13 +1,14 @@
 from email.headerregistry import Address
 from email.message import EmailMessage
 from django.core.management.base import BaseCommand, CommandError
-from django.template import loader
 import smtplib
 import mimetypes
 import os
 from os import listdir
 from polls.models import Magazine, User, Subscribe, Task
 from django.utils import timezone
+from django.template.loader import render_to_string
+
 
 class Command(BaseCommand):
     help = 'Send mails'
@@ -35,29 +36,26 @@ class Command(BaseCommand):
                 task = Task(pdf=f, email=subscribe.user.email, sended=False)
                 task.save()
 
-
         for f in listdir(path):
             if not f.endswith('.pdf'):
                 continue
 
             tasks = Task.objects.filter(pdf=f, sended=False)
             for task in tasks:
-                ok = self.send(path, f, task.email)
+                user = User.objects.get(email=task.email)
+                datetime = timezone.now()
+                content = render_to_string('mail.html', {'user': user, 'datetime': datetime})
+                ok = self.send(path, f, task.email, content)
                 if ok:
                     task.sended = True
                     task.save()
 
-
-    def send(self, pdfPath, pdf, email):
-        template = loader.get_template('mail.html')
-        context = {}
-        content = template.render(context)
-
+    def send(self, pdfPath, pdf, email, content):
         title = pdf[0:pdf.find('-')]
 
         msg = EmailMessage()
         msg["Subject"] = '您的{}更新了'.format(title)
-        msg["From"] = Address("外刊訂閱", "magazines", "helloworld555.site")
+        msg["From"] = Address("小報童", "newsboy", "newsboy.site")
         msg.set_content('')
         msg.add_alternative(content, subtype='html')
         msg["To"] = email

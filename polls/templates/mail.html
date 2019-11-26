@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
   <style>
@@ -14,6 +16,10 @@
     table th {
       border: 1px solid black;
     }
+
+    table.pay td {
+      width: 100px;
+    }
   </style>
   <head>
     <!-- Required meta tags -->
@@ -23,18 +29,17 @@
   <body>
 
     <p>您的訂閱請見附件</p>
-    <h2>今日更新 2019-11-18 <a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/subscribe/?email=xxx@gmail.com&key=kdljfsdl">更改訂閱</a></h2>
+    <h2>今日更新 {{datetime|date:"Y-m-d"}} <a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/subscribe/?email=xxx@gmail.com&key=kdljfsdl">更改訂閱</a></h2>
 
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
+    {% for magazine in magazines %}
+        <br>
+        <h2>{{magazine.titleAndDate}}</h2>
+        <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
+    {% endfor %}
 
     <h2>您的會員權利</h2>
 
-    <table class="table">
+    <table class="vip">
       <thead>
         <tr>
           <th scope="col">可選期刊數</th>
@@ -44,24 +49,24 @@
       </thead>
       <tbody>
         <tr>
-          <td>3</td>
-          <td>1</td>
-          <td>2019-12-12</td>
+          <td>{{user.invited_count|add:3}}</td>
+          <td>{{user.invited_count}}</td>
+          <td>{{user.expire_date|date:"Y-m-d"}}</td>
         </tr>
       </tbody>
     </table>
 
-    <p>(每<a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/invite">邀請一名好友</a>加入會員，可多解鎖一種期刊，上限5種)</p>
+    <p>(每<a href="{% url 'polls:invite_page' user.uuid %}">邀請一名好友</a>加入會員，可多解鎖一種期刊，上限5種)</p>
 
     <h2>續訂</h2>
 
-    <table class="table">
+    <table class="pay">
       <tbody>
         <tr>
-          <td><a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/pay">1個月</a></td>
-          <td><a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/pay">3個月</a></td>
-          <td><a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/pay">半年</a></td>
-          <td><a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/pay">1年</a></td>
+          <td><a href="{% url 'polls:pay' user.uuid 1 %}">1個月</a></td>
+          <td><a href="{% url 'polls:pay' user.uuid 3 %}">3個月</a></td>
+          <td><a href="{% url 'polls:pay' user.uuid 6 %}">半年</a></td>
+          <td><a href="{% url 'polls:pay' user.uuid 12 %}">1年</a></td>
         </tr>
       </tbody>
     </table>

@@ -16,6 +16,10 @@
     table th {
       border: 1px solid black;
     }
+
+    table.pay td {
+      width: 100px;
+    }
   </style>
   <head>
     <!-- Required meta tags -->
@@ -28,7 +32,7 @@
 
   <h3>您已成功更改訂閱! <a href="{% url 'polls:invite_page' user.uuid %}">邀請好友</a>，解鎖更多期刊</h3>
 
-    <table class="table">
+    <table class="vip">
       <thead>
         <tr>
           <th scope="col">郵箱</th>
@@ -49,7 +53,7 @@
 
     <h3>續訂</h3>
 
-    <table class="table">
+    <table class="pay">
       <tbody>
         <tr>
           <td><a href="{% url 'polls:pay' user.uuid 1 %}">1個月</a></td>
