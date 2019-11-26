@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -9,26 +11,25 @@
   </head>
   <body>
 
-    <h5>您的郵箱：xxxxxx@gmail.com</h5>
+    <h5>您的郵箱：{{user.email}}</h5>
 
     <form action="{% url 'polls:update_subscribe' user.uuid user.key %}" method="post">
       {% csrf_token %}
       <input type="submit" value="更改訂閱">
     </form>
 
-    <h5>最多選擇3種期刊(<a href="http://ec2-54-91-6-66.compute-1.amazonaws.com:8000/polls/invite">邀請好友</a>，解鎖更多期刊)</h5>
+    <h5>最多選擇3種期刊(<a href="{% url 'polls:invite_page' user.uuid %}">邀請好友</a>，解鎖更多期刊)</h5>
 
     <h3>今日最新</h3>
 
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
+    {% for magazine in magazines %}
+<!--    <row>-->
+      <h2>{{magazine.titleAndDate}}</h2>
+      <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
+<!--    </row>-->
+    {% endfor %}
 
     <h3>精品推薦</h3>
-
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
 
   </body>
 </html>

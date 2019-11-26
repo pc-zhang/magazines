@@ -12,6 +12,9 @@ class User(models.Model):
 
 class Magazine(models.Model):
     title = models.CharField(max_length=100)
+    titleAndDate = models.CharField(max_length=100, default='')
+    thumbnailPath = models.CharField(max_length=100, default='')
+    todayUpdated = models.BooleanField(default=False)
 
 
 class Subscribe(models.Model):

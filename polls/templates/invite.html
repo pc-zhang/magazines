@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,7 +10,7 @@
     <title>免費訂閱體驗</title>
   </head>
   <body>
-    <h3>您的好友xxx@gmail.com贈與您一次免費訂閱體驗</h3>
+    <h3>您的好友{{user.email}}贈與您一次免費訂閱體驗</h3>
     <p>您的郵箱：</p>
     <form action="{% url 'polls:new_subscribe' user.uuid %}" method="post">
       {% csrf_token %}
@@ -20,15 +22,12 @@
 
     <h3>今日最新</h3>
 
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
+    {% for magazine in magazines %}
+      <h2>{{magazine.titleAndDate}}</h2>
+      <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
+    {% endfor %}
 
     <h3>精品推薦</h3>
-
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
 
   </body>
 </html>

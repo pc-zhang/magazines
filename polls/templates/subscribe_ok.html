@@ -37,10 +37,10 @@
       </thead>
       <tbody>
         <tr>
-          <td>xxxxxx@gmail.com</td>
-          <td>3</td>
-          <td>1</td>
-          <td>2019-12-12</td>
+          <td>{{user.email}}</td>
+          <td>{{user.invited_count|add:3}}</td>
+          <td>{{user.invited_count}}</td>
+          <td>{{user.expire_date|date:"Y-m-d"}}</td>
         </tr>
       </tbody>
     </table>

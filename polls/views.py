@@ -7,7 +7,8 @@ from django.http import Http404
 
 def invite_page(request, invitor_id):
     user = get_object_or_404(User, uuid=invitor_id)
-    return render(request, 'invite.html', {'user': user})
+    magazines = Magazine.objects.all()
+    return render(request, 'invite.html', {'user': user, 'magazines': magazines})
 
 
 def new_subscribe(request, invitor_id):
@@ -20,7 +21,8 @@ def new_subscribe(request, invitor_id):
 
 def update_page(request, user_id, key):
     user = get_object_or_404(User, uuid=user_id, key=key)
-    return render(request, 'update_subscribe.html', {'user': user})
+    magazines = Magazine.objects.all()
+    return render(request, 'update_subscribe.html', {'user': user, 'magazines': magazines})
 
 
 def update_subscribe(request, user_id, key):
