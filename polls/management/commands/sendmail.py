@@ -43,7 +43,7 @@ class Command(BaseCommand):
             tasks = Task.objects.filter(pdf=f, sended=False)
             for task in tasks:
                 user = User.objects.get(email=task.email)
-                content = render_to_string('mail.html', {'user': user, 'date': localdate()})
+                content = render_to_string('mail.html', {'user': user, 'magazines': Magazine.objects.all(), 'date': localdate()})
                 ok = self.send(path, f, task.email, content)
                 if ok:
                     task.sended = True

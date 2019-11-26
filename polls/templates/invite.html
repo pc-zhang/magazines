@@ -10,7 +10,7 @@
     <title>免費訂閱體驗</title>
   </head>
   <body>
-    <h3>您的好友{{user.email}}贈與您一次免費訂閱體驗</h3>
+    <h3>您的好友{{hidden_email}}贈與您一次免費訂閱體驗</h3>
     <p>您的郵箱：</p>
     <form action="{% url 'polls:new_subscribe' user.uuid %}" method="post">
       {% csrf_token %}

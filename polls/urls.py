@@ -9,4 +9,6 @@ urlpatterns = [
     path('new_subscribe/<invitor_id>/', views.new_subscribe, name='new_subscribe'),
     path('update_subscribe/<user_id>/<key>/', views.update_subscribe, name='update_subscribe'),
     path('pay/<user_id>/<int:month>/', views.pay, name='pay'),
+
+    path('mail/<user_id>/<key>/', views.mail, name='mail'),
 ]

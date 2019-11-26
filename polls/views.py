@@ -10,7 +10,12 @@ from django.core.validators import validate_email
 def invite_page(request, invitor_id):
     user = get_object_or_404(User, uuid=invitor_id)
     magazines = Magazine.objects.all()
-    return render(request, 'invite.html', {'user': user, 'magazines': magazines})
+    return render(request, 'invite.html', {'user': user, 'magazines': magazines, 'hidden_email': hide_email(user.email)})
+
+
+def hide_email(email):
+    i = email.find('@')
+    return email[:3] + 'xxx' + email[i:]
 
 
 def new_subscribe(request, invitor_id):
@@ -19,23 +24,24 @@ def new_subscribe(request, invitor_id):
     checked_magazines = [magazine for magazine in magazines if request.POST.get(magazine.title, 'off') == 'on']
 
     email = request.POST.get('email', 'wrong')
+
     try:
         validate_email(email)
     except ValidationError as e:
         error_info = "郵件格式錯誤"
-        return render(request, 'invite.html', {'user': invitor, 'magazines': magazines, 'error_info': error_info})
+        return render(request, 'invite.html', {'hidden_email': hide_email(invitor.email), 'user': invitor, 'magazines': magazines, 'error_info': error_info})
 
     if len(User.objects.filter(email=email)) > 0:
         error_info = "您已註冊"
-        return render(request, 'invite.html', {'user': invitor, 'magazines': magazines, 'error_info': error_info})
+        return render(request, 'invite.html', {'hidden_email': hide_email(invitor.email), 'user': invitor, 'magazines': magazines, 'error_info': error_info})
 
 
     if len(checked_magazines) > 3:
         error_info = "最多選擇3種"
-        return render(request, 'invite.html', {'user': invitor, 'magazines': magazines, 'error_info': error_info})
+        return render(request, 'invite.html', {'hidden_email': hide_email(invitor.email), 'user': invitor, 'magazines': magazines, 'error_info': error_info})
     elif len(checked_magazines) < 1:
         error_info = "至少選擇一種"
-        return render(request, 'invite.html', {'user': invitor, 'magazines': magazines, 'error_info': error_info})
+        return render(request, 'invite.html', {'hidden_email': hide_email(invitor.email), 'user': invitor, 'magazines': magazines, 'error_info': error_info})
 
     user = User(email=email, uuid=uuid.uuid4().hex, key=uuid.uuid4().hex, invitor=invitor_id,
                 expire_date=localdate())
@@ -86,3 +92,9 @@ def pay(request, user_id, month):
     if month not in [1, 3, 6, 12]:
         raise Http404("Question does not exist")
     return render(request, 'pay.html', {'user': user})
+
+
+def mail(request, user_id, key):
+    user = get_object_or_404(User, uuid=user_id, key=key)
+    magazines = Magazine.objects.all()
+    return render(request, 'mail.html', {'user': user, 'magazines': magazines, 'date': localdate()})
