@@ -16,18 +16,21 @@
       {% csrf_token %}
       <input id="POST-name" type="text" name="email">
       <input type="submit" value="發送期刊">
+
+      <p>最多選擇3種期刊</p>
+
+      <h3>今日最新</h3>
+
+      {% for magazine in magazines %}
+      <br>
+        <input type="checkbox" name="{{magazine.title}}">
+        <h2>{{magazine.titleAndDate}}</h2>
+        <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
+      {% endfor %}
+
+      <h3>精品推薦</h3>
+
     </form>
-
-    <p>最多選擇3種期刊</p>
-
-    <h3>今日最新</h3>
-
-    {% for magazine in magazines %}
-      <h2>{{magazine.titleAndDate}}</h2>
-      <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
-    {% endfor %}
-
-    <h3>精品推薦</h3>
 
   </body>
 </html>

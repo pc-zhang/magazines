@@ -16,20 +16,21 @@
     <form action="{% url 'polls:update_subscribe' user.uuid user.key %}" method="post">
       {% csrf_token %}
       <input type="submit" value="更改訂閱">
+
+      <h5>最多選擇3種期刊(<a href="{% url 'polls:invite_page' user.uuid %}">邀請好友</a>，解鎖更多期刊)</h5>
+
+      <h3>今日最新</h3>
+
+      {% for magazine in magazines %}
+        <br>
+        <input type="checkbox" name="{{magazine.title}}">
+        <h2>{{magazine.titleAndDate}}</h2>
+        <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
+      {% endfor %}
+
+      <h3>精品推薦</h3>
+
     </form>
-
-    <h5>最多選擇3種期刊(<a href="{% url 'polls:invite_page' user.uuid %}">邀請好友</a>，解鎖更多期刊)</h5>
-
-    <h3>今日最新</h3>
-
-    {% for magazine in magazines %}
-<!--    <row>-->
-      <h2>{{magazine.titleAndDate}}</h2>
-      <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
-<!--    </row>-->
-    {% endfor %}
-
-    <h3>精品推薦</h3>
 
   </body>
 </html>

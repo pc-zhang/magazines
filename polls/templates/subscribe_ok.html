@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
   <style>
@@ -60,9 +62,10 @@
 
     <h3>您的訂閱!</h3>
 
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
-    <img src="images/IMG_4840.JPG" width="300" height="480">
+    {% for subscribe in subscribes %}
+        <h2>{{magazine.titleAndDate}}</h2>
+        <img src="{% static 'images/' %}{{subscribe.magazine.thumbnailPath}}" width="300" height="480">
+    {% endfor %}
 
   </body>
 </html>
