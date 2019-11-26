@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from polls.models import Magazine, User, Subscribe, Task
-from django.utils import timezone
+from django.utils.timezone import localdate
 
 
 class Command(BaseCommand):
@@ -32,5 +32,5 @@ class Command(BaseCommand):
             magazine.save()
 
         if len(User.objects.filter(uuid='uuid')) == 0:
-            user = User(email='xxx', uuid='uuid', key='key', invitor='invitor', expire_date=timezone.now())
+            user = User(email='xxx', uuid='uuid', key='key', invitor='invitor', expire_date=localdate())
             user.save()

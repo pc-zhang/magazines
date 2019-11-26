@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Subscribe, User, Magazine
 import uuid
-from django.utils import timezone
+from django.utils.timezone import localdate
 from django.http import Http404
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -38,7 +38,7 @@ def new_subscribe(request, invitor_id):
         return render(request, 'invite.html', {'user': invitor, 'magazines': magazines, 'error_info': error_info})
 
     user = User(email=email, uuid=uuid.uuid4().hex, key=uuid.uuid4().hex, invitor=invitor_id,
-                expire_date=timezone.now())
+                expire_date=localdate())
     user.save()
 
     for magazine in checked_magazines:

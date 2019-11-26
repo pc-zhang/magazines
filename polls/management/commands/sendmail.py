@@ -6,7 +6,7 @@ import mimetypes
 import os
 from os import listdir
 from polls.models import Magazine, User, Subscribe, Task
-from django.utils import timezone
+from django.utils.timezone import localdate
 from django.template.loader import render_to_string
 
 
@@ -28,7 +28,7 @@ class Command(BaseCommand):
             magazine = Magazine.objects.get(title=title)
             subscribes = Subscribe.objects.filter(magazine=magazine)
             for subscribe in subscribes:
-                if timezone.now().date() > subscribe.user.expire_date.date():
+                if localdate() > subscribe.user.expire_date:
                     continue
                 tasks = Task.objects.filter(pdf=f, email=subscribe.user.email)
                 if len(tasks) > 0:

@@ -7,7 +7,7 @@ class User(models.Model):
     key = models.CharField(max_length=100)
     invitor = models.CharField(max_length=100)
     invited_count = models.IntegerField(default=0)
-    expire_date = models.DateTimeField('expire date')
+    expire_date = models.DateField('expire date')
 
 
 class Magazine(models.Model):
