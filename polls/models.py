@@ -20,3 +20,9 @@ class Magazine(models.Model):
 class Subscribe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     magazine = models.ForeignKey(Magazine, on_delete=models.CASCADE)
+
+
+class Task(models.Model):
+    pdf = models.CharField(max_length=100, default='')
+    email = models.EmailField(default='')
+    sended = models.BooleanField(default=False)
