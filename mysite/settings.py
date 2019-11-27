@@ -78,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mydb',
-        'USER': 'zpc',
+        'USER': 'postgres',
         'PASSWORD': 'stray11@',
         'HOST': '127.0.0.1',
         'PORT': '5432',
@@ -122,6 +122,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/'
+STATIC_ROOT = '/var/www-data/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
