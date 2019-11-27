@@ -13,9 +13,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         prepath = options['prepath']
         path = options['path']
-        # for f in pdfFiles:
-        #     params = ['convert', f + '[0]', f[:-3] + '.jpg']
-        #     subprocess.check_call(params)
+
         for magazine in Magazine.objects.all():
             magazine.todayUpdated = False
             magazine.save()

@@ -24,13 +24,23 @@
       <h3>今日最新</h3>
 
       {% for magazine in magazines %}
+      {% if magazine.todayUpdated %}
       <br>
         <input type="checkbox" name="{{magazine.title}}">
         <h2>{{magazine.titleAndDate}}</h2>
         <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
+      {% endif %}
       {% endfor %}
 
       <h3>精品推薦</h3>
+      {% for magazine in magazines %}
+      {% if not magazine.todayUpdated %}
+      <br>
+        <input type="checkbox" name="{{magazine.title}}">
+        <h2>{{magazine.titleAndDate}}</h2>
+        <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
+      {% endif %}
+      {% endfor %}
 
     </form>
 

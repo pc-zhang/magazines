@@ -32,9 +32,11 @@
     <h2>今日更新 {{date|date:"Y-m-d"}} <a href="{{site}}{% url 'polls:update_page' user.uuid user.key %}">更改訂閱</a></h2>
 
     {% for magazine in magazines %}
+    {% if magazine.todayUpdated %}
         <br>
         <h2>{{magazine.titleAndDate}}</h2>
         <img src="{{site}}{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
+    {% endif %}
     {% endfor %}
 
     <h2>您的會員權利</h2>
