@@ -18,6 +18,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         path = options['path']
+        site = 'http://helloworld555.site/'
 
         for f in listdir(path):
             if not f.endswith('.pdf'):
@@ -43,7 +44,7 @@ class Command(BaseCommand):
             tasks = Task.objects.filter(pdf=f, sended=False)
             for task in tasks:
                 user = User.objects.get(email=task.email)
-                content = render_to_string('mail.html', {'user': user, 'magazines': Magazine.objects.all(), 'date': localdate()})
+                content = render_to_string('mail.html', {'user': user, 'magazines': Magazine.objects.all(), 'date': localdate(), 'site': site})
                 ok = self.send(path, f, task.email, content)
                 if ok:
                     task.sended = True
