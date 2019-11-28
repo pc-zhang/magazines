@@ -12,6 +12,7 @@ import os
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 import datetime
 import calendar
+from mysite.settings import STATIC_ROOT
 
 def add_months(sourcedate, months):
     month = sourcedate.month - 1 + months
@@ -138,7 +139,7 @@ def pay(request, user_id, month):
     qr_message = "bitcoin:{}?amount={}&label={}&message={}".format(btc_address, amount, label, message)
     img = qrcode.make(qr_message, image_factory=factory)
 
-    path = 'polls/static/payments/{}.svg'.format(btc_address)
+    path = STATIC_ROOT + 'payments/{}.svg'.format(btc_address)
 
     if os.path.isfile(path):
         os.remove(path)
