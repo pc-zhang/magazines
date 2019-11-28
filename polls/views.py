@@ -117,49 +117,55 @@ def pay(request, user_id, month):
     if month not in [1, 3, 6, 12]:
         raise Http404("Question does not exist")
 
+    label = '小報童'
+    message = '您的郵箱{}，續訂{}個月'.format(user.email, month)
+
     try:
         order = Order.objects.get(user=user, month=month)
+        return render(request, 'pay.html', {'user': user, 'btc_address': order.address, 'qr_message': "bitcoin:{}?amount={}&label={}&message={}".format(order.address, order.amount, label, message),
+                                            'new_expire_date': add_months(user.expire_date, month)})
     except Order.DoesNotExist:
+        # create new order (user, month) -> (amount, address)
+        amount = 0.1
+
         rpc_user = 'whoami'
         rpc_password = 'uf94kgj3FWT9jovL3gAM967mies3E'
         rpc_connection = AuthServiceProxy("http://%s:%s@127.0.0.1:8332" % (rpc_user, rpc_password))
         addresses = rpc_connection.batch_([['getnewaddress']])
         address = addresses[0]
 
-        order = Order(user=user, month=month, address=address, amount=1)
+        order = Order(user=user, month=month, address=address, amount=amount)
         order.save()
+
+        factory = qrcode.image.svg.SvgFillImage
+        qr_message = "bitcoin:{}?amount={}&label={}&message={}".format(order.address, order.amount, label, message)
+        img = qrcode.make(qr_message, image_factory=factory)
+
+        path = STATIC_ROOT + 'payments/{}.svg'.format(order.address)
+
+        if os.path.isfile(path):
+            os.remove(path)
+            for i in range(0, 10):
+                time.sleep(.1)
+                if not os.path.isfile(path):
+                    break
+
+            if os.path.isfile(path):
+                raise Http404("Question does not exist")
+
+        img.save(path)
+
+        for i in range(0, 10):
+            time.sleep(.1)
+            if os.path.isfile(path):
+                new_expire_date = add_months(user.expire_date, month)
+                return render(request, 'pay.html', {'user': user, 'btc_address': order.address, 'qr_message': qr_message,
+                                                    'new_expire_date': new_expire_date})
+
     except:
         raise Http404('支付系統維護中，請耐心等待')
 
-    factory = qrcode.image.svg.SvgFillImage
-    btc_address = order.address
-    amount = 0.1
-    label = '小報童'
-    message = '您的郵箱{}，續訂{}個月'.format(user.email, month)
-    qr_message = "bitcoin:{}?amount={}&label={}&message={}".format(btc_address, amount, label, message)
-    img = qrcode.make(qr_message, image_factory=factory)
-
-    path = STATIC_ROOT + 'payments/{}.svg'.format(btc_address)
-
-    if os.path.isfile(path):
-        os.remove(path)
-        for i in range(0, 10):
-            time.sleep(.1)
-            if not os.path.isfile(path):
-                break
-
-        if os.path.isfile(path):
-            raise Http404("Question does not exist")
-
-    img.save(path)
-
-    for i in range(0, 10):
-        time.sleep(.1)
-        if os.path.isfile(path):
-            new_expire_date = add_months(user.expire_date, month)
-            return render(request, 'pay.html', {'user': user, 'btc_address': btc_address, 'qr_message': qr_message, 'new_expire_date': new_expire_date})
-
-    raise Http404("Question does not exist")
+    raise Http404('支付系統維護中，請耐心等待')
 
 
 def mail(request, user_id, key):
