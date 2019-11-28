@@ -26,3 +26,10 @@ class Task(models.Model):
     pdf = models.CharField(max_length=100, default='')
     email = models.EmailField(default='')
     sended = models.BooleanField(default=False)
+
+
+class Order(models.Model):
+    address = models.CharField(max_length=100, default='')
+    amount = models.IntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    month = models.IntegerField(default=0)

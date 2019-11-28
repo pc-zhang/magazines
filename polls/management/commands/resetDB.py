@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from polls.models import Magazine, User, Subscribe, Task
+from polls.models import Magazine, User, Subscribe, Task, Order
 from django.utils.timezone import localdate
 
 
@@ -13,6 +13,7 @@ class Command(BaseCommand):
         User.objects.all().delete()
         Subscribe.objects.all().delete()
         Task.objects.all().delete()
+        Order.objects.all().delete()
 
         titles = ["Reader's Digest USA"
             , 'Harvard Business Review'

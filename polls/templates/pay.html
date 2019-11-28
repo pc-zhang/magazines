@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
   <style>
@@ -38,14 +40,16 @@
           <td>{{user.email}}</td>
           <td>{{user.invited_count|add:3}}</td>
           <td>{{user.invited_count}}</td>
-          <td>{{user.expire_date|date:"Y-m-d"}}</td>
+          <td>{{new_expire_date|date:"Y-m-d"}}</td>
         </tr>
       </tbody>
     </table>
 
     <h3>沒有比特幣？截圖分享此二維碼邀請好友代付</h3>
 
-    <img class="img-thumbnail mb-3" src="payrequest.png" alt="Album screenshot" width="480" height="300">
+    <a class="donate-link" href="{{qr_message}}" target="_blank">{{btc_address}}</a>
+    <br>
+    <img src="{% static 'payments/' %}{{btc_address}}.svg" width="300" height="300">
 
     <p>很遺憾我們不能接受其他形式的支付，為您帶來的不便深表歉意</p>
   </body>
