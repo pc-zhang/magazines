@@ -3,6 +3,9 @@
 <!doctype html>
 <html lang="en">
   <style>
+    .container {
+      text-align:center;
+    }
     table {
       border-collapse: collapse;
       border: 1px solid black;
@@ -26,6 +29,7 @@
   </head>
   <body>
 
+    <div class="container">
     <table class="vip">
       <thead>
         <tr>
@@ -45,14 +49,11 @@
       </tbody>
     </table>
 
-    <h3>沒有比特幣？截圖分享此二維碼邀請好友代付</h3>
+    <h3> <font color="blue">沒有比特幣？截圖分享此二維碼邀請好友代付（付款成功夠約10分鐘您會收到確認郵件） </font> </h3>
 
-    <p>{{price}}</p>
-
-    <a class="donate-link" href="{{qr_message}}" target="_blank">{{btc_address}}</a>
-    <br>
     <img src="{% static 'payments/' %}{{btc_address}}.svg" width="300" height="300">
 
-    <p>很遺憾我們不能接受其他形式的支付，為您帶來的不便深表歉意</p>
+    <p>{{price}}</p>
+    </div>
   </body>
 </html>
