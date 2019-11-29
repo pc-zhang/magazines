@@ -2,24 +2,30 @@
 
 <!doctype html>
 <html lang="en">
+
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>免費訂閱體驗</title>
+    <title>免费订阅体验</title>
   </head>
   <body>
-    <h3>您的好友{{hidden_email}}贈與您一次免費訂閱體驗</h3>
-    <p>您的郵箱：</p>
+    <h3>您的好友{{hidden_email}}赠与您一次免费订阅体验</h3>
+
     <form action="{% url 'polls:new_subscribe' user.uuid %}" method="post">
       {% csrf_token %}
+
+      <p style="color:blue;">您的邮箱：</p>
+
       <input id="POST-name" type="text" name="email">
-      <input type="submit" value="發送期刊">
 
-        <h2>{{error_info}}</h2>
+      <input type="submit" value="发送期刊">
 
-      <p>最多選擇3種期刊</p>
+
+      <h2 style="color:red;">{{error_info}}</h2>
+
+      <p style="color:blue;">最多选择3种期刊</p>
 
       <h3>今日最新</h3>
 
@@ -27,14 +33,14 @@
       {% if magazine.todayUpdated %}
       <br>
         <input type="checkbox" name="{{magazine.title}}">
-        <h2>{{magazine.titleAndDate}}</h2>
+        <h2 style="color:blue;">{{magazine.titleAndDate}}</h2>
         <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
       {% endif %}
       {% endfor %}
 
       <br>
       <br>
-      <h3>精品推薦</h3>
+      <h3>精品推荐</h3>
       {% for magazine in magazines %}
       {% if not magazine.todayUpdated %}
       <br>

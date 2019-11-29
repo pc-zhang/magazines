@@ -26,19 +26,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>訂閱成功</title>
+    <title>订阅成功</title>
   </head>
   <body>
 
-  <h3>您已成功更改訂閱! <a href="{% url 'polls:invite_page' user.uuid %}">邀請好友</a>，解鎖更多期刊</h3>
+  <h3>您已成功更改订阅! <a href="{% url 'polls:invite_page' user.uuid %}">邀请好友</a>，解锁更多期刊</h3>
 
     <table class="vip">
       <thead>
         <tr>
-          <th scope="col">郵箱</th>
-          <th scope="col">可選期刊數</th>
-          <th scope="col">已邀請好友</th>
-          <th scope="col">訂閱結束時間</th>
+          <th scope="col">邮箱</th>
+          <th scope="col">可选期刊数</th>
+          <th scope="col">已邀请好友</th>
+          <th scope="col">订阅结束时间</th>
         </tr>
       </thead>
       <tbody>
@@ -51,20 +51,20 @@
       </tbody>
     </table>
 
-    <h3>續訂</h3>
+    <h3>续订</h3>
 
     <table class="pay">
       <tbody>
         <tr>
-          <td><a href="{% url 'polls:pay' user.uuid 1 %}">1個月</a></td>
-          <td><a href="{% url 'polls:pay' user.uuid 3 %}">3個月</a></td>
+          <td><a href="{% url 'polls:pay' user.uuid 1 %}">1个月</a></td>
+          <td><a href="{% url 'polls:pay' user.uuid 3 %}">3个月</a></td>
           <td><a href="{% url 'polls:pay' user.uuid 6 %}">半年</a></td>
           <td><a href="{% url 'polls:pay' user.uuid 12 %}">1年</a></td>
         </tr>
       </tbody>
     </table>
 
-    <h3>您的訂閱!</h3>
+    <h3>您的订阅：</h3>
 
     {% for subscribe in subscribes %}
         <h2>{{magazine.titleAndDate}}</h2>

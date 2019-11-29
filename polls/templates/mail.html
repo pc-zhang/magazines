@@ -28,8 +28,8 @@
   </head>
   <body>
 
-    <p>您的訂閱請見附件</p>
-    <h2>今日更新 {{date|date:"Y-m-d"}} <a href="{{site}}{% url 'polls:update_page' user.uuid user.key %}">更改訂閱</a></h2>
+    <p>您的订阅请见附件</p>
+    <h2>今日更新 {{date|date:"Y-m-d"}} <a href="{{site}}{% url 'polls:update_page' user.uuid user.key %}">更改订阅</a></h2>
 
     {% for magazine in magazines %}
     {% if magazine.todayUpdated %}
@@ -39,14 +39,14 @@
     {% endif %}
     {% endfor %}
 
-    <h2>您的會員權利</h2>
+    <h2>您的会员权利</h2>
 
     <table class="vip">
       <thead>
         <tr>
-          <th scope="col">可選期刊數</th>
-          <th scope="col">已邀請好友</th>
-          <th scope="col">訂閱結束時間</th>
+          <th scope="col">可选期刊数</th>
+          <th scope="col">已邀请好友</th>
+          <th scope="col">订阅结束时间</th>
         </tr>
       </thead>
       <tbody>
@@ -58,15 +58,15 @@
       </tbody>
     </table>
 
-    <p>(每<a href="{{site}}{% url 'polls:invite_page' user.uuid %}">邀請一名好友</a>加入會員，可多解鎖一種期刊)</p>
+    <p>(每<a href="{{site}}{% url 'polls:invite_page' user.uuid %}">邀请一名好友</a>加入会员，可多解锁一种期刊)</p>
 
-    <h2>續訂</h2>
+    <h2>续订</h2>
 
     <table class="pay">
       <tbody>
         <tr>
-          <td><a href="{{site}}{% url 'polls:pay' user.uuid 1 %}">1個月</a></td>
-          <td><a href="{{site}}{% url 'polls:pay' user.uuid 3 %}">3個月</a></td>
+          <td><a href="{{site}}{% url 'polls:pay' user.uuid 1 %}">1个月</a></td>
+          <td><a href="{{site}}{% url 'polls:pay' user.uuid 3 %}">3个月</a></td>
           <td><a href="{{site}}{% url 'polls:pay' user.uuid 6 %}">半年</a></td>
           <td><a href="{{site}}{% url 'polls:pay' user.uuid 12 %}">1年</a></td>
         </tr>

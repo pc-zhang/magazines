@@ -46,24 +46,24 @@ def new_subscribe(request, invitor_id):
     try:
         validate_email(email)
     except ValidationError as e:
-        error_info = "郵件格式錯誤"
+        error_info = "邮件格式错误"
         return render(request, 'invite.html',
                       {'hidden_email': hide_email(invitor.email), 'user': invitor, 'magazines': magazines,
                        'error_info': error_info})
 
     if len(User.objects.filter(email=email)) > 0:
-        error_info = "您已註冊"
+        error_info = "您已注册"
         return render(request, 'invite.html',
                       {'hidden_email': hide_email(invitor.email), 'user': invitor, 'magazines': magazines,
                        'error_info': error_info})
 
     if len(checked_magazines) > 3:
-        error_info = "最多選擇3種"
+        error_info = "最多选择3种"
         return render(request, 'invite.html',
                       {'hidden_email': hide_email(invitor.email), 'user': invitor, 'magazines': magazines,
                        'error_info': error_info})
     elif len(checked_magazines) < 1:
-        error_info = "至少選擇一種"
+        error_info = "至少选择一种"
         return render(request, 'invite.html',
                       {'hidden_email': hide_email(invitor.email), 'user': invitor, 'magazines': magazines,
                        'error_info': error_info})
@@ -93,12 +93,12 @@ def update_subscribe(request, user_id, key):
     magazines = Magazine.objects.all()
     checked_magazines = [magazine for magazine in magazines if request.POST.get(magazine.title, 'off') == 'on']
 
-    if len(checked_magazines) > 3:
-        error_info = "最多選擇3種"
+    if len(checked_magazines) > (user.invited_count + 3):
+        error_info = "最多选择{}种".format(user.invited_count + 3)
         return render(request, 'update_subscribe.html',
                       {'user': user, 'magazines': magazines, 'error_info': error_info})
     elif len(checked_magazines) < 1:
-        error_info = "至少選擇一種"
+        error_info = "至少选择一种"
         return render(request, 'update_subscribe.html',
                       {'user': user, 'magazines': magazines, 'error_info': error_info})
 
@@ -118,22 +118,22 @@ def pay(request, user_id, month):
     user = get_object_or_404(User, uuid=user_id)
 
     if month == 1:
-        dollars = 1.99
-        price = '1個月/1.99美元/15人民幣'
+        rmb = 15
+        price = '1个月/15元'
     elif month == 3:
-        dollars = 5.99
-        price = '3個月/5.99美元/45人民幣'
+        rmb = 45
+        price = '3个月/45元'
     elif month == 6:
-        dollars = 11.99
-        price = '6個月/11.99美元/90人民幣'
+        rmb = 90
+        price = '半年/90元'
     elif month == 12:
-        dollars = 23.99
-        price = '12個月/23.99美元/180人民幣'
+        rmb = 180
+        price = '一年/180元'
     else:
         raise Http404("Question does not exist")
 
-    label = '小報童'
-    message = '您的郵箱{}，續訂{}個月'.format(user.email, month)
+    label = '小报童'
+    message = '您的邮箱{}，续订{}个月'.format(user.email, month)
 
 
     try:
@@ -144,7 +144,7 @@ def pay(request, user_id, month):
                                             })
     except Order.DoesNotExist:
         # create new order (user, month) -> (amount, address)
-        contents = urllib.request.urlopen("https://blockchain.info/tobtc?currency=USD&value={}".format(dollars)).read()
+        contents = urllib.request.urlopen("https://blockchain.info/tobtc?currency=CNY&value={}".format(rmb)).read()
         contents.decode("utf-8")
         amount = float(contents)
 
@@ -184,9 +184,9 @@ def pay(request, user_id, month):
                                                     'price': price})
 
     except:
-        raise Http404('支付系統維護中，請耐心等待')
+        raise Http404('支付系统维护中，请耐心等待')
 
-    raise Http404('支付系統維護中，請耐心等待')
+    raise Http404('支付系统维护中，请耐心等待')
 
 
 def mail(request, user_id, key):

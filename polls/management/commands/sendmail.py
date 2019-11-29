@@ -55,7 +55,7 @@ class Command(BaseCommand):
 
         msg = EmailMessage()
         msg["Subject"] = '您的{}更新了'.format(title)
-        msg["From"] = Address("小報童", "newsboy", "helloworld555.site")
+        msg["From"] = Address("小报童", "newsboy", "helloworld555.site")
         msg.set_content('')
         msg.add_alternative(content, subtype='html')
         msg["To"] = email
