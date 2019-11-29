@@ -16,19 +16,24 @@ def add_months(sourcedate, months):
 class Command(BaseCommand):
 
     def add_arguments(self, parser):
-        parser.add_argument('prepath')
-        parser.add_argument('path')
+        pass
+
 
     def handle(self, *args, **options):
         rpc_user = 'whoami'
         rpc_password = 'uf94kgj3FWT9jovL3gAM967mies3E'
-        rpc_connection = AuthServiceProxy("http://%s:%s@127.0.0.1:8332" % (rpc_user, rpc_password))
-        unspents = rpc_connection.batch_([['listunspent']])
+        rpc_connection = AuthServiceProxy("http://%s:%s@127.0.0.1:18443" % (rpc_user, rpc_password))
+        results = rpc_connection.batch_([['listunspent']])
+        unspents = results[0]
         for unspent in unspents:
             address = unspent["address"]
             amount = unspent["amount"]
             print('{}, {}'.format(unspent["address"], unspent["amount"]))
-            order = Order.objects.get(address=address)
+            try:
+                order = Order.objects.get(address=address)
+            except Order.DoesNotExist:
+                continue
+
             if amount > order.amount or (order.amount - amount) / order.amount < 0.1:
                 order.user.expire_date = add_months(order.user.expire_date, order.month)
                 order.user.save(update_fields=["expire_date"])

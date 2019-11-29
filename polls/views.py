@@ -118,13 +118,17 @@ def pay(request, user_id, month):
     user = get_object_or_404(User, uuid=user_id)
 
     if month == 1:
-        dollars = '1個月/1.99美元/15人民幣'
+        dollars = 1.99
+        price = '1個月/1.99美元/15人民幣'
     elif month == 3:
-        dollars = '3個月/5.99美元/45人民幣'
+        dollars = 5.99
+        price = '3個月/5.99美元/45人民幣'
     elif month == 6:
-        dollars = '6個月/11.99美元/90人民幣'
+        dollars = 11.99
+        price = '6個月/11.99美元/90人民幣'
     elif month == 12:
-        dollars = '12個月/23.99美元/180人民幣'
+        dollars = 23.99
+        price = '12個月/23.99美元/180人民幣'
     else:
         raise Http404("Question does not exist")
 
@@ -136,17 +140,17 @@ def pay(request, user_id, month):
         order = Order.objects.get(user=user, month=month)
         return render(request, 'pay.html', {'user': user, 'btc_address': order.address, 'qr_message': "bitcoin:{}?amount={}&label={}&message={}".format(order.address, order.amount, label, message),
                                             'new_expire_date': add_months(user.expire_date, month),
-                                            'dollars': dollars
+                                            'price': price 
                                             })
     except Order.DoesNotExist:
         # create new order (user, month) -> (amount, address)
-        contents = urllib.request.urlopen("https://blockchain.info/tobtc?currency=USD&value=1.99").read()
+        contents = urllib.request.urlopen("https://blockchain.info/tobtc?currency=USD&value={}".format(dollars)).read()
         contents.decode("utf-8")
         amount = float(contents)
 
         rpc_user = 'whoami'
         rpc_password = 'uf94kgj3FWT9jovL3gAM967mies3E'
-        rpc_connection = AuthServiceProxy("http://%s:%s@127.0.0.1:8332" % (rpc_user, rpc_password))
+        rpc_connection = AuthServiceProxy("http://%s:%s@127.0.0.1:18443" % (rpc_user, rpc_password))
         addresses = rpc_connection.batch_([['getnewaddress']])
         address = addresses[0]
 
@@ -177,7 +181,7 @@ def pay(request, user_id, month):
                 new_expire_date = add_months(user.expire_date, month)
                 return render(request, 'pay.html', {'user': user, 'btc_address': order.address, 'qr_message': qr_message,
                                                     'new_expire_date': new_expire_date,
-                                                    'dollars': dollars})
+                                                    'price': price})
 
     except:
         raise Http404('支付系統維護中，請耐心等待')
