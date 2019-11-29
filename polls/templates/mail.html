@@ -20,6 +20,7 @@
     table.pay td {
       width: 100px;
     }
+
   </style>
   <head>
     <!-- Required meta tags -->
@@ -34,7 +35,7 @@
     {% for magazine in magazines %}
     {% if magazine.todayUpdated %}
         <br>
-        <h2>{{magazine.titleAndDate}}</h2>
+        <h2 style="color: blue;">{{magazine.titleAndDate}}</h2>
         <img src="{{site}}{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
     {% endif %}
     {% endfor %}
