@@ -13,6 +13,8 @@ from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 import datetime
 import calendar
 from mysite.settings import STATIC_ROOT
+import urllib.request
+
 
 def add_months(sourcedate, months):
     month = sourcedate.month - 1 + months
@@ -114,19 +116,33 @@ def update_subscribe(request, user_id, key):
 
 def pay(request, user_id, month):
     user = get_object_or_404(User, uuid=user_id)
-    if month not in [1, 3, 6, 12]:
+
+    if month == 1:
+        dollars = '1個月/1.99美元/15人民幣'
+    elif month == 3:
+        dollars = '3個月/5.99美元/45人民幣'
+    elif month == 6:
+        dollars = '6個月/11.99美元/90人民幣'
+    elif month == 12:
+        dollars = '12個月/23.99美元/180人民幣'
+    else:
         raise Http404("Question does not exist")
 
     label = '小報童'
     message = '您的郵箱{}，續訂{}個月'.format(user.email, month)
 
+
     try:
         order = Order.objects.get(user=user, month=month)
         return render(request, 'pay.html', {'user': user, 'btc_address': order.address, 'qr_message': "bitcoin:{}?amount={}&label={}&message={}".format(order.address, order.amount, label, message),
-                                            'new_expire_date': add_months(user.expire_date, month)})
+                                            'new_expire_date': add_months(user.expire_date, month),
+                                            'dollars': dollars
+                                            })
     except Order.DoesNotExist:
         # create new order (user, month) -> (amount, address)
-        amount = 0.1
+        contents = urllib.request.urlopen("https://blockchain.info/tobtc?currency=USD&value=1.99").read()
+        contents.decode("utf-8")
+        amount = float(contents)
 
         rpc_user = 'whoami'
         rpc_password = 'uf94kgj3FWT9jovL3gAM967mies3E'
@@ -160,7 +176,8 @@ def pay(request, user_id, month):
             if os.path.isfile(path):
                 new_expire_date = add_months(user.expire_date, month)
                 return render(request, 'pay.html', {'user': user, 'btc_address': order.address, 'qr_message': qr_message,
-                                                    'new_expire_date': new_expire_date})
+                                                    'new_expire_date': new_expire_date,
+                                                    'dollars': dollars})
 
     except:
         raise Http404('支付系統維護中，請耐心等待')
