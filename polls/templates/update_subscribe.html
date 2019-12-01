@@ -2,6 +2,11 @@
 
 <!doctype html>
 <html lang="en">
+  <style>
+    input {
+      height: 25px;
+    }
+  </style>
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,23 +16,26 @@
   </head>
   <body>
 
-    <h5>您的邮箱：{{user.email}}</h5>
+    <p style="color:blue;">您的邮箱：{{user.email}}</p>
 
     <form action="{% url 'polls:update_subscribe' user.uuid user.key %}" method="post">
       {% csrf_token %}
-      <input type="submit" value="更改订阅">
+      <button type="submit" value="Submit" style="height:30px;">更改订阅</button>
 
-      <h2>{{error_info}}</h2>
+      <h2 style="color:red;">{{error_info}}</h2>
 
-      <h5>最多选择{{user.invited_count|add:3}}种期刊(<a href="{% url 'polls:invite_page' user.uuid %}">邀请好友</a>，解锁更多期刊)</h5>
+      <p style="color:blue;">最多选择{{user.invited_count|add:3}}种期刊(<a href="{% url 'polls:invite_page' user.uuid %}">邀请好友</a>，解锁更多期刊)</p>
 
       <h3>今日最新</h3>
 
       {% for magazine in magazines %}
       {% if magazine.todayUpdated %}
         <br>
-        <input type="checkbox" name="{{magazine.title}}">
+      <div>
+        <input style="float:left;" type="checkbox" name="{{magazine.title}}">
         <h2>{{magazine.titleAndDate}}</h2>
+      </div>
+
         <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
       {% endif %}
       {% endfor %}
@@ -39,8 +47,11 @@
       {% for magazine in magazines %}
       {% if not magazine.todayUpdated %}
         <br>
-        <input type="checkbox" name="{{magazine.title}}">
+      <div>
+        <input style="float:left;" type="checkbox" name="{{magazine.title}}">
         <h2>{{magazine.titleAndDate}}</h2>
+      </div>
+
         <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
       {% endif %}
       {% endfor %}

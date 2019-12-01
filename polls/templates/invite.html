@@ -2,6 +2,11 @@
 
 <!doctype html>
 <html lang="en">
+  <style>
+    input {
+      height: 25px;
+    }
+  </style>
 
   <head>
     <!-- Required meta tags -->
@@ -20,8 +25,7 @@
 
       <input id="POST-name" type="text" name="email">
 
-      <input type="submit" value="发送期刊">
-
+      <button type="submit" value="Submit" style="height:30px;">发送期刊</button>
 
       <h2 style="color:red;">{{error_info}}</h2>
 
@@ -32,8 +36,11 @@
       {% for magazine in magazines %}
       {% if magazine.todayUpdated %}
       <br>
-        <input type="checkbox" name="{{magazine.title}}">
+      <div>
+        <input style="float:left;" type="checkbox" name="{{magazine.title}}">
         <h2 style="color:blue;">{{magazine.titleAndDate}}</h2>
+      </div>
+
         <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
       {% endif %}
       {% endfor %}
@@ -44,8 +51,11 @@
       {% for magazine in magazines %}
       {% if not magazine.todayUpdated %}
       <br>
-        <input type="checkbox" name="{{magazine.title}}">
+      <div>
+        <input style="float:left;" type="checkbox" name="{{magazine.title}}">
         <h2>{{magazine.titleAndDate}}</h2>
+      </div>
+
         <img src="{% static 'images/' %}{{magazine.thumbnailPath}}" width="300" height="480">
       {% endif %}
       {% endfor %}
